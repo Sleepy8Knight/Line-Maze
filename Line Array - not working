@@ -1,0 +1,165 @@
+#include <QTRSensors.h>
+
+
+QTRSensors qtr;
+
+
+const uint8_t SensorCount = 4;
+
+uint16_t sensorValues[SensorCount];
+  
+const int In1 = 4;
+const int In2 = 2;
+const int In3 = 6;
+const int In4 = 7;
+
+const int line = 8;
+
+const int enA = 3;
+const int enB = 5;
+
+void setup() {
+
+    qtr.setTypeAnalog();
+
+  qtr.setSensorPins((const uint8_t[]){A0, A1, A2, A3}, SensorCount);
+
+  Serial.begin(9600);
+
+  pinMode(line, INPUT);
+
+  pinMode(enA, OUTPUT);
+  pinMode(enB, OUTPUT);
+
+  pinMode(In3, OUTPUT);
+  pinMode(In4, OUTPUT);
+  pinMode(In1, OUTPUT);
+  pinMode(In2, OUTPUT);
+
+
+  analogWrite(enA, 80);
+  analogWrite(enB, 60);
+}
+
+void loop() {
+
+qtr.read(sensorValues);
+
+  for (uint8_t i = 0; i < SensorCount; i++){
+
+
+
+    Serial.print(sensorValues[i]);
+
+    Serial.print('\t');
+
+ if (sensorValues[4] >> 5 || sensorValues[3] >> 5 || sensorValues[2] >> 5 ) {
+
+      analogWrite(enA, 70);
+analogWrite(enB, 90);
+
+
+    digitalWrite(In4, LOW);
+    digitalWrite(In3, LOW);
+    digitalWrite(In2, LOW);
+    digitalWrite(In1, LOW);
+
+    delay(100);
+
+    digitalWrite(In4, LOW);
+    digitalWrite(In3, enB);
+    digitalWrite(In2, enA);
+    digitalWrite(In1, LOW);
+
+
+
+    delay(300);
+
+      analogWrite(enA, 80);
+analogWrite(enB, 60);
+
+  } else if (sensorValues[4] >> 5 && sensorValues[3] >> 5 && sensorValues[2] >> 5 && sensorValues[1] >> 5) {
+    
+  
+      analogWrite(enA, 70);
+analogWrite(enB, 90);
+
+
+    digitalWrite(In4, LOW);
+    digitalWrite(In3, LOW);
+    digitalWrite(In2, LOW);
+    digitalWrite(In1, LOW);
+
+    delay(100);
+
+    digitalWrite(In4, LOW);
+    digitalWrite(In3, enB);
+    digitalWrite(In2, enA);
+    digitalWrite(In1, LOW);
+
+
+
+    delay(500);
+
+      analogWrite(enA, 80);
+analogWrite(enB, 60);
+
+
+  } else {
+
+    digitalWrite(In4, LOW);
+    digitalWrite(In3, enB);
+    digitalWrite(In2, LOW);
+    digitalWrite(In1, enA);
+    
+  }
+
+  
+ Serial.println();
+
+ 
+  }
+
+/*  
+  int s1 = digitalRead(line);
+  Serial.println(s1);
+  delay(10);
+
+
+  if ( s1 == 1) {
+    digitalWrite(In4, LOW);
+    digitalWrite(In3, enB);
+    digitalWrite(In2, LOW);
+    digitalWrite(In1, enA);
+
+
+
+  } else {
+      analogWrite(enA, 60);
+analogWrite(enB, 80);
+
+
+    digitalWrite(In4, LOW);
+    digitalWrite(In3, LOW);
+    digitalWrite(In2, LOW);
+    digitalWrite(In1, LOW);
+
+    delay(100);
+
+    digitalWrite(In4, LOW);
+    digitalWrite(In3, enB);
+    digitalWrite(In2, enA);
+    digitalWrite(In1, LOW);
+
+
+
+    delay(300);
+
+      analogWrite(enA, 75);
+analogWrite(enB, 60);
+  }
+*/
+
+
+}
+
