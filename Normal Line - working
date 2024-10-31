@@ -1,0 +1,70 @@
+const int In1 = 4;
+const int In2 = 2;
+const int In3 = 6;
+const int In4 = 7;
+
+const int line = 8;
+
+const int enA = 3;
+const int enB = 5;
+
+void setup() {
+
+
+  Serial.begin(9600);
+
+  pinMode(line, INPUT);
+
+  pinMode(enA, OUTPUT);
+  pinMode(enB, OUTPUT);
+
+  pinMode(In3, OUTPUT);
+  pinMode(In4, OUTPUT);
+  pinMode(In1, OUTPUT);
+  pinMode(In2, OUTPUT);
+
+
+  analogWrite(enA, 75);
+  analogWrite(enB, 60);
+}
+
+void loop() {
+  int s1 = digitalRead(line);
+  Serial.println(s1);
+  delay(10);
+
+  if ( s1 == 1) {
+    digitalWrite(In4, LOW);
+    digitalWrite(In3, enB);
+    digitalWrite(In2, LOW);
+    digitalWrite(In1, enA);
+
+delay(50);
+
+  } else {
+      analogWrite(enA, 60);
+analogWrite(enB, 80);
+
+
+    digitalWrite(In4, LOW);
+    digitalWrite(In3, LOW);
+    digitalWrite(In2, LOW);
+    digitalWrite(In1, LOW);
+
+    delay(100);
+
+    digitalWrite(In4, LOW);
+    digitalWrite(In3, enB);
+    digitalWrite(In2, enA);
+    digitalWrite(In1, LOW);
+
+
+
+    delay(300);
+
+      analogWrite(enA, 75);
+analogWrite(enB, 60);
+  }
+
+}
+
